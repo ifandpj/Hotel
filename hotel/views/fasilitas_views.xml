@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hotel_facility_tree" model="ir.ui.view">
+        <field name="name">hotel.facility.tree</field>
+        <field name="model">fasilitas.hotel</field>
+        <field name="arch" type="xml">
+            <tree string="Facilities">
+                <field name="name"/>
+                <field name="kode"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_fasilitas_hotel_form" model="ir.ui.view">
+        <field name="name">Fasiitas.Hotel.form</field>
+        <field name="model">fasilitas.hotel</field>
+        <field name="arch" type="xml">
+            <form string="Facility">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="kode"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+   
+
+
+
+    
+    
+
+</odoo>

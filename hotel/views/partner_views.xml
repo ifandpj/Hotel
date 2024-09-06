@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="res_partner_inherit_module_name" model="ir.ui.view">
+            <field name="name">res.partner.view.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Transaksi Booking">
+                        <group>
+                            <field name="transaksi_line" />
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="res_partner_member_action" model="ir.actions.act_window">
+            <field name="name">Member</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="member_hotel_menu" name="Member" action="res_partner_member_action" parent="menu_hotel_management" />
+    
+    </data>
+    
+
+</odoo>

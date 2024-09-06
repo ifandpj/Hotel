@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_hotel_management" name="Hotel Management" sequence="1"
+        web_icon="hotel,static/description/icon.png" />
+
+    <menuitem id="menu_hotel_room" name="Kamar" parent="menu_hotel_management"
+        action="action_hotel_room" sequence="2"/>
+    <menuitem id="menu_hotel_facility" name="Fasilitas" parent="menu_hotel_management"
+        action="action_hotel_facility" sequence="3"/>
+    <menuitem id="menu_hotel_transaction" name="Transaksi" parent="menu_hotel_management"
+        action="action_hotel_transaction" sequence="4" />
+
+        <menuitem id="menu_hotel_transaction_dashboard"
+        name=" Dashboard"
+        action="action_hotel_transaction_dashboard"
+        parent="menu_hotel_management"
+        sequence ="1"
+        />
+
+    <record id="action_hotel_room" model="ir.actions.act_window">
+        <field name="name">Rooms</field>
+        <field name="res_model">base.hotel</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <record id="action_hotel_facility" model="ir.actions.act_window">
+        <field name="name">Facilities</field>
+        <field name="res_model">fasilitas.hotel</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_hotel_transaction" model="ir.actions.act_window">
+        <field name="name">Transactions</field>
+        <field name="res_model">transaksi.hotel</field>
+        <field name="view_mode">tree,form,calendar</field>
+    </record>
+
+    <record id="action_hotel_transaction_dashboard" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">transaksi.hotel</field>
+        <field name="view_mode">graph,pivot,kanban</field>
+        <!-- <field name="view_id" ref="view_hotel_transaction_dashboard"/> -->
+    </record>
+    
+   
+
+</odoo>

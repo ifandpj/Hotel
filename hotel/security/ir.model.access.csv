@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_base_hotel_user,hotel.base.hotel,model_base_hotel,base.group_user,1,1,1,1
+access_transaksi_hotel_user,hotel.transaksi.hotel,model_transaksi_hotel,base.group_user,1,1,1,1
+access_fasilitas_hotel_user,hotel.fasilitas.hotel,model_fasilitas_hotel,base.group_user,1,1,1,1
+access_report_hotel_trasnaksi_hotel_invoice_user,hotel.report.hotel.trasnaksi_hotel_invoice,model_report_hotel_trasnaksi_hotel_invoice,base.group_user,1,1,1,1

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hotel_transaction_tree" model="ir.ui.view">
+        <field name="name">hotel.transaction.tree</field>
+        <field name="model">transaksi.hotel</field>
+        <field name="arch" type="xml">
+            <tree string="Transactions">
+                <field name="state"/>
+                <field name="member_id"/>
+                <field name="room_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="duration"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hotel_transaction_form" model="ir.ui.view">
+        <field name="name">hotel.transaction.form</field>
+        <field name="model">transaksi.hotel</field>
+        <field name="arch" type="xml">
+            <form string="Transaksi Hotel">
+                <header>
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button string="Cancel" name="action_cancel" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active" readonly="1"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="member_id"/>
+                            <field name="room_id"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="duration"/>
+                        </group>
+                    </group>
+    
+                    <notebook>
+                        <page string="Note">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+
+
+    <record id="view_hotel_transaction_calendar" model="ir.ui.view">
+        <field name="name">hotel.transaction.calendar</field>
+        <field name="model">transaksi.hotel</field>
+        <field name="arch" type="xml">
+            <calendar string="Transaction Calendar" date_start="start_date" date_stop="end_date" color="state">
+                <field name="member_id"/>
+                <field name="room_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_hotel_transaction_pivot" model="ir.ui.view">
+        <field name="name">hotel.transaction.pivot</field>
+        <field name="model">transaksi.hotel</field>
+        <field name="arch" type="xml">
+            <pivot string="Transaction Analysis">
+                <field name="start_date" type="row"/>
+                <field name="end_date" type="row"/>
+                <field name="state" type="col"/>
+                <field name="duration" type="measure"/>
+                <field name="room_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_hotel_transaction_kanban" model="ir.ui.view">
+        <field name="name">hotel.transaction.kanban</field>
+        <field name="model">transaksi.hotel</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_title">
+                                <field name="member_id"/>
+                            </div>
+                            <div class="oe_kanban_content">
+                                <div>
+                                    Status : <field name="state"/>
+                                </div>
+                                <div>
+                                   Start Date : <field name="start_date"/>
+                                </div>
+                                <div>
+                                  End Date  <field name="end_date"/>
+                                </div>
+                                <div>
+                                  Duration : <field name="duration"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+                <field name="state"/>
+            </kanban>
+        </field>
+    </record>
+
+
+    <record id="view_hotel_transaction_graph" model="ir.ui.view">
+        <field name="name">hotel.transaction.graph</field>
+        <field name="model">transaksi.hotel</field>
+        <field name="arch" type="xml">
+            <graph string="Transaction Analysis">
+                <field name="state" type="row"/>
+                <field name="duration" type="measure"/>
+                <field name="start_date" type="filter"/>
+                <field name="end_date" type="filter"/>
+                <!-- <field name="date" type="x_axis"/>
+                <field name="total" type="y_axis"/> -->
+            </graph>
+        </field>
+    </record>
+    
+    
+    
+    
+    
+    
+
+</odoo>
