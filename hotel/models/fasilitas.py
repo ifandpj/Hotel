@@ -6,3 +6,4 @@ class FasilitasHotel(models.Model):
 
     name = fields.Char(string='Nama', required=True)
     kode = fields.Char(string='Code', required=True)
+    # description = fields.Text(string="Description")

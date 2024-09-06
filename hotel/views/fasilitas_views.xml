@@ -8,6 +8,7 @@
             <tree string="Facilities">
                 <field name="name"/>
                 <field name="kode"/>
+                <!-- <field name="description" /> -->
             </tree>
         </field>
     </record>
@@ -21,9 +22,22 @@
                     <group>
                         <field name="name"/>
                         <field name="kode"/>
+                        <!-- <field name="description"/> -->
                     </group>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <record id="view_fasilitas_hotel_search" model="ir.ui.view">
+        <field name="name">fasilitas.hotel.search</field>
+        <field name="model">fasilitas.hotel</field>
+        <field name="arch" type="xml">
+            <search string="Fasilitas Hotel Search">
+                <field name="name"/>
+                <field name="kode"/>
+                <!-- <field name="description"/> -->
+            </search>
         </field>
     </record>
 
