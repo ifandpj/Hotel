@@ -120,8 +120,7 @@
                 <field name="duration" type="measure"/>
                 <field name="start_date" type="filter"/>
                 <field name="end_date" type="filter"/>
-                <!-- <field name="date" type="x_axis"/>
-                <field name="total" type="y_axis"/> -->
+             
             </graph>
         </field>
     </record>

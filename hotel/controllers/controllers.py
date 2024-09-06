@@ -6,29 +6,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 class HotelRoomController(http.Controller):
-    # @http.route('/hotel/room', type='json', auth='public', methods=['GET'])
-    # def get_rooms(self):
-    #     request.logging.info("GET request received for /hotel/room")
-    #     rooms = request.env['base.hotel'].sudo().search([])
-    #     return rooms.read(['name', 'lantai', 'panjang', 'lebar', 'luas', 'state', 'harga_malam', 'fasilitas_ids', 'transaksi_line'])
-
-
-    # @http.route('/hotel/room', type='json', auth='public', methods=['POST'])
-    # def create_room(self, **kwargs):
-    #     room = request.env['base.hotel'].sudo().create(kwargs)
-    #     return room.read(['name', 'lantai', 'panjang', 'lebar', 'luas', 'state', 'harga_malam'])
-
-    # @http.route('/hotel/room/<int:room_id>', type='json', auth='public', methods=['DELETE'])
-    # def delete_room(self, room_id):
-    #     room = request.env['base.hotel'].sudo().browse(room_id)
-    #     room.unlink()
-    #     return {'status': 'deleted'}
-
-    # @http.route('/hotel/room/<int:room_id>', type='json', auth='public', methods=['PUT'])
-    # def update_room(self, room_id, **kwargs):
-    #     room = request.env['base.hotel'].sudo().browse(room_id)
-    #     room.write(kwargs)
-    #     return room.read(['name', 'lantai', 'panjang', 'lebar', 'luas', 'state', 'harga_malam'])
+   
 
     @http.route('/hotel/rooms', type='http', auth='public', methods=['GET'], csrf=False)
     def get_rooms(self):
@@ -48,8 +26,7 @@ class HotelRoomController(http.Controller):
                     'luas': room['panjang'] * room['lebar'],
                     'state': room['state'],
                     'harga_malam': room['harga_malam'],
-                    # 'facilities': [],
-                    # 'booking_transactions': []
+                  
                 }
 
                
@@ -87,8 +64,6 @@ class HotelRoomController(http.Controller):
         try:
          
             data = request.jsonrequest
-            print("===========kwargs", data)
-            _logger.info("Data diterima dari request JSON: %s", json.dumps(data))
 
          
             if not data:
@@ -112,14 +87,11 @@ class HotelRoomController(http.Controller):
             })
 
            
-            _logger.info("Kamar baru berhasil dibuat dengan ID: %s", new_room.id)
-
          
             return {'success': True, 'room_id': new_room.id}
 
         except Exception as e:
          
-            _logger.error("Terjadi kesalahan: %s", str(e))
             return {'error': str(e)}
         
         
@@ -130,10 +102,6 @@ class HotelRoomController(http.Controller):
            
             data = request.jsonrequest
 
-    
-            _logger.info(f"Data received for update: {data}")
-
-    
             room = request.env['base.hotel'].sudo().search([('id', '=', kamar_id)], limit=1)
 
            
@@ -154,10 +122,10 @@ class HotelRoomController(http.Controller):
     @http.route('/hotel/rooms/delete/<int:kamar_id>', type='http', auth='public', methods=['DELETE'], csrf=False)
     def delete_room(self, kamar_id, **kwargs):
         try:
-            # Cari kamar berdasarkan ID
+          
             room = request.env['base.hotel'].sudo().search([('id', '=', kamar_id)], limit=1)
 
-            # Jika kamar ditemukan, hapus
+            
             if room:
                 room_name = room.name
                 room.unlink()
