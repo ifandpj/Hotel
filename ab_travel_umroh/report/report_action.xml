@@ -1,0 +1,39 @@
+<odoo>
+
+	<record id="report_delivery_order_action" model="ir.actions.report">
+		<field name="name">Print Delivery (PDF)</field>
+		<field name="model">stock.picking</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">ab_travel_umroh.report_delivery</field>
+		<field name="report_file">ab_travel_umroh.report_stock_picking_delivery</field>
+		<field name="print_report_name">'Delivery - %s' % (object.name)</field>
+		<field name="paperformat_id" ref="ab_travel_umroh.custom_report_paper_delivery_order"/>
+		<!-- <field name="binding_model_id" ref="model_stock_picking" /> -->
+		<field name="binding_view_types">form</field>
+	</record>
+
+	<record id="report_invoice_action" model="ir.actions.report">
+		<field name="name">Cetak Invoice</field>
+		<field name="model">account.move</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">ab_travel_umroh.report_invoice</field>
+		<field name="report_file">ab_travel_umroh.report_account_move_invoice</field>
+		<field name="print_report_name">'Invoice - %s' % (object.name)</field>
+		<field name="paperformat_id" ref="ab_travel_umroh.custom_report_paper_customer_invoice"/>
+		<field name="binding_model_id" ref="model_account_move"/>
+		<field name="binding_view_types">form</field>
+	</record>
+
+	<record id="report_travel_package_manifest_action" model="ir.actions.report">
+		<field name="name">Travel Umroh (XLSX)</field>
+		<field name="model">travel.package</field>
+		<field name="report_type">xlsx</field>
+		<field name="report_name">ab_travel_umroh.report_manifest</field>
+		<field name="report_file">ab_travel_umroh.report_travel_package_manifest</field>
+		<field name="print_report_name">'Manifest - %s' % (object.name)</field>
+		<field name="binding_model_id" eval="False"/>
+		<!-- <field name="binding_model_id" ref="model_travel_package"/> -->
+		<field name="binding_view_types">form</field>
+	</record>
+
+</odoo>

@@ -1,0 +1,134 @@
+<odoo>
+
+	<!-- Membuat Custom Form Jamaah pada Res Partner -->
+	<record id="jamaah_res_partner_view_form" model="ir.ui.view">
+		<field name="name">jamaah.res.partner.form</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//form/sheet/notebook" position="before">
+				<group string="Additional Information" style="color: cadetblue;">
+					<group>
+						<field name="no_ktp" style="color: black;" />
+						<field name="nama_ayah" style="color: black;" />
+						<field name="pekerjaan_ayah" style="color: black;" />
+						<field name="tempat_lahir" style="color: black;" />
+						<field name="pendidikan" style="color: black;" />
+						<field name="status_hubungan" style="color: black;" />
+					</group>
+					<group>
+						<field name="jenis_kelamin" style="color: black;" />
+						<field name="nama_ibu" style="color: black;" />
+						<field name="pekerjaan_ibu" style="color: black;" />
+						<field name="tanggal_lahir" style="color: black;" />
+						<field name="golongan_darah" style="color: black;" />
+						<field name="ukuran_baju" style="color: black;" />
+					</group>
+				</group>
+				<group string="Passpor Information" style="color: cadetblue;">
+					<group>
+						<field name="no_passpor" style="color: black;" />
+						<field name="tanggal_berlaku" style="color: black;" />
+						<field name="imigrasi" style="color: black;" />
+					</group>
+					<group>
+						<field name="nama_passpor" style="color: black;" />
+						<field name="tanggal_expired" style="color: black;" />
+					</group>
+				</group>
+				<group string="Scan Document" style="color: cadetblue;">
+					<group>
+						<field name="scan_passpor" style="color: black;" widget="image" />
+						<field name="scan_ktp" style="color: black;" widget="image" />
+					</group>
+					<group>
+						<field name="scan_buku_nikah" style="color: black;" widget="image" />
+						<field name="scan_kartu_keluarga" style="color: black;" widget="image" />
+					</group>
+				</group>
+			</xpath>
+		</field>
+	</record>
+
+
+	<!-- Membuat Custom Form Airline Hotel pada Form Res Partner -->
+	<record id="airline_hotel_travel_umroh_view_form" model="ir.ui.view">
+		<field name="name">airline.hotel.travel.umroh.form</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//form/sheet/notebook/page[2]" position="inside">
+				<group name="container_row_stock" priority="7">
+					<group string="Travel">
+						<field name="hotel" readonly="1" />
+						<field name="airline" readonly="1" />
+					</group>
+				</group>
+			</xpath>
+		</field>
+	</record>
+
+	<!-- Membuat Filter Airline -->
+	<record id="travel_umroh_airline_view_search" model="ir.ui.view">
+		<field name="name">travel.umroh.airline.search</field>
+		<field name="model">res.partner</field>
+		<field name="arch" type="xml">
+			<search string="Airline">
+				<filter string="Airline" name="filter_get_airline" icon="terp-accessories-archiver-minus" domain="[('airline','=',1)]"/>
+			</search>
+		</field>
+	</record>
+
+	<!-- Membuat Filter Hotel -->
+	<record id="travel_umroh_hotel_view_search" model="ir.ui.view">
+		<field name="name">travel.umroh.airline.search</field>
+		<field name="model">res.partner</field>
+		<field name="arch" type="xml">
+			<search string="Hotel">
+				<filter string="Hotel" name="filter_get_hotel" icon="terp-accessories-archiver-minus" domain="[('hotel','=',1)]"/>
+			</search>
+		</field>
+	</record>
+
+	<!-- Membuat Action/Event Product -->
+	<record id="travel_umroh_produk_action" model="ir.actions.act_window">
+		<field name="name">Produk</field>
+		<field name="res_model">product.template</field>
+		<field name="view_mode">kanban,tree,form</field>
+		<field name="context">{"search_default_filter_to_sell":1, "sale_multi_pricelist_product_template": 1}</field>
+	</record>
+
+	<!-- Membuat Action/Event Bills Of Product -->
+	<record id="travel_umroh_paket_produk_action" model="ir.actions.act_window">
+		<field name="name">Paket Produk</field>
+		<field name="res_model">mrp.bom</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<!-- Membuat Action/Event Jamaah -->
+	<record id="travel_umroh_jamaah_action" model="ir.actions.act_window">
+		<field name="name">Jamaah</field>
+		<field name="res_model">res.partner</field>
+		<field name="view_mode">kanban,tree,form</field>
+	</record>
+
+	<!-- Membuat Action/Event Airline -->
+	<record id="travel_umroh_airline_action" model="ir.actions.act_window">
+		<field name="name">Airlines</field>
+		<field name="res_model">res.partner</field>
+		<field name="view_mode">kanban,tree,form</field>
+		<field name="search_view_id" ref="travel_umroh_airline_view_search" />
+		<field name="domain">[('airline', '=', True)]</field>
+		<field name="context">{'default_airline': True}</field>
+	</record>
+
+	<!-- Membuat Action/Event Hotel -->
+	<record id="travel_umroh_hotel_action" model="ir.actions.act_window">
+		<field name="name">Hotels</field>
+		<field name="res_model">res.partner</field>
+		<field name="view_mode">kanban,tree,form</field>
+		<field name="search_view_id" ref="travel_umroh_hotel_view_search" />
+		<field name="context">{'search_default_filter_get_hotel': 1, 'default_hotel': True}</field>
+	</record>
+
+</odoo>

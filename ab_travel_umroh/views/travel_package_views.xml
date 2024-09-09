@@ -1,0 +1,243 @@
+<odoo>
+	<data>
+
+		<record id="travel_package_view_tree" model="ir.ui.view">
+			<field name="name">travel.package.tree</field>
+			<field name="model">travel.package</field>
+			<field name="arch" type="xml">
+				<tree string="Travel Package">
+					<field name="ref" />
+					<field name="product_id" />
+					<field name="tanggal_berangkat" />
+					<field name="tanggal_kembali" />
+					<field name="quota" />
+					<field name="remaining_quota" />
+					<field name="quota_progress" />
+					<field name="total_cost" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="travel_package_view_form" model="ir.ui.view">
+			<field name="name">travel.package.form</field>
+			<field name="model">travel.package</field>
+			<field name="arch" type="xml">
+				<form string="Travel Package">
+					<header>
+						<button name="action_cancel" type="object" string="Set To Draft" states="confirm"/>
+						<button name="action_update_manifest" type="object" string="Update Manifest" class="btn-primary" attrs="{'invisible': ['|', ('state', '=', 'draft'), ('state', '=', 'done')]}" />
+						<button name="action_confirm" type="object" string="Confirm" states="draft" class="btn-primary"/>
+						<button name="action_close" type="object" string="Done" states="confirm" class="oe_highlight"/>
+						<button name="action_cetak_manifest" type="object" string="Cetak Manifest" class="btn-primary" attrs="{'invisible': ['|', ('state', '=', 'draft'), ('state', '=', 'done')]}" />
+						<field name="state" widget="statusbar" statusbar_visible="draft,confirm,done"/>
+					</header>
+					<sheet>
+						<div class="oe_title">
+							<h1>
+								<field name="ref"/>
+							</h1>
+						</div>
+						<group string="Informasi Jadwal" style="color: cadetblue;">
+							<group style="color: black;">
+								<field name="tanggal_berangkat" />
+							</group>
+							<group style="color: black;">
+								<field name="tanggal_kembali" />
+							</group>
+						</group>
+						<group string="Produk" style="color: cadetblue;">
+							<group style="color: black;">
+								<field name="product_id" />
+							</group>
+							<group style="color: black;">
+								<field name="product_package_id" />
+							</group>
+						</group>
+						<group string="Seats" style="color: cadetblue;">
+							<group style="color: black;">
+								<field name="quota" />
+								<field name="remaining_quota" />
+							</group>
+							<group style="color: black;">
+								<field name="quota_progress" widget="progressbar" />
+							</group>
+						</group>
+						<notebook>
+							<page string="Hotel Lines">
+								<field name="hotel_line" mode="tree,kanban">
+									<tree string="Hotel Lines" editable="top">
+										<field name="partner_id"/>
+										<field name="check_in"/>
+										<field name="check_out"/>
+										<field name="destinasi"/>
+									</tree>
+								</field>
+							</page>
+							<page string="Airline Lines">
+								<field name="airline_line" mode="tree,kanban">
+									<tree string="Airline Lines" editable="top">
+										<field name="partner_id"/>
+										<field name="tanggal_berangkat"/>
+										<field name="kota_asal"/>
+										<field name="kota_tujuan"/>
+									</tree>
+								</field>
+							</page>
+							<page string="Schedule Lines">
+								<field name="schedule_line" mode="tree,kanban">
+									<tree string="Airline Lines" editable="top">
+										<field name="nama_kegiatan" width="50"/>
+										<field name="tanggal_kegiatan" width="50"/>
+									</tree>
+								</field>
+							</page>
+							<page string="Manifest">
+								<group>
+									<field name="manifest_line" mode="tree" nolabel="1" colspan="2">
+										<tree string="Manifest">
+											<field name="title"/>
+											<field name="partner_id"/>
+											<field name="jenis_kelamin"/>
+											<field name="no_ktp"/>
+											<field name="no_passpor"/>
+											<field name="tanggal_lahir"/>
+											<field name="tempat_lahir"/>
+											<field name="tanggal_berlaku"/>
+											<field name="tanggal_expired"/>
+											<field name="imigrasi"/>
+											<field name="room_type"/>
+											<field name="age"/>
+											<field name="mahrom_id"/>
+											<field name="users_id"/>
+										</tree>
+									</field>
+								</group>
+							</page>
+							<page string="HPP Lines">
+								<field name="hpp_line" mode="tree" colspan="2">
+									<tree string="HPP Lines" editable="top">
+										<field name="barang" />
+										<field name="qty" />
+										<field name="unit" />
+										<field name="unit_price" />
+										<field name="subtotal" />
+									</tree>
+								</field>
+								<group style="float: right; clear: both;">
+									<field name="total_cost" string="Total Cost" />
+								</group>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="sale_order_view_form" model="ir.ui.view">
+			<field name="name">sale.order.view.form</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='partner_id']" position="after">
+					<field name="travel_package_id"/>
+				</xpath>
+				<xpath expr="//page[@name='customer_signature']" position="after">
+					<page string="Manifest">
+						<group>
+							<field name="manifest_line" string="Passport Line" mode="tree" nolabel="1" colspan="2">
+								<tree string="Manifest">
+									<field name="title"/>
+									<field name="partner_id"/>
+									<field name="jenis_kelamin"/>
+									<field name="no_ktp"/>
+									<field name="no_passpor"/>
+									<field name="tanggal_lahir"/>
+									<field name="tempat_lahir"/>
+									<field name="tanggal_berlaku"/>
+									<field name="tanggal_expired"/>
+									<field name="imigrasi"/>
+									<field name="room_type"/>
+									<field name="age"/>
+									<field name="mahrom_id"/>
+									<field name="users_id"/>
+								</tree>
+								<form>
+									<sheet>
+										<group string="Personal" style="color: cadetblue;">
+											<group style="color: black;">
+												<field name="title"/>
+												<field name="partner_id"/>
+												<field name="room_type"/>
+												<field name="tanggal_lahir"/>
+											</group>
+											<group style="color: black;">
+												<field name="no_ktp"/>
+												<field name="mahrom_id"/>
+												<field name="age"/>
+												<field name="tempat_lahir"/>
+											</group>
+										</group>
+										<group string="Passport" style="color: cadetblue;">
+											<group style="color: black;">
+												<field name="no_passpor"/>
+												<field name="tanggal_berlaku"/>
+												<field name="imigrasi"/>
+											</group>
+											<group style="color: black;">
+												<field name="tanggal_expired"/>
+												<field name="nama_passpor"/>
+												<field name="notes"/>
+											</group>
+										</group>
+										<group string="Scan Document" style="color: cadetblue;">
+											<group style="color: black;">
+												<field name="scan_passpor" widget="image"/>
+												<field name="scan_ktp" widget="image"/>
+											</group>
+											<group style="color: black;">
+												<field name="scan_buku_nikah" widget="image"/>
+												<field name="scan_kartu_keluarga" widget="image"/>
+											</group>
+										</group>
+									</sheet>
+								</form>
+							</field>
+						</group>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+
+		<record id="stock_picking_view_form" model="ir.ui.view">
+			<field name="name">stock.picking.view.form</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//button[@name='action_confirm']" position="before">
+					<button string="Print Delivery" name="action_print_delivery" type="object" class="oe_highlight" states="done"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="travel_package_action" model="ir.actions.act_window">
+			<field name="name">Travel Package</field>
+			<field name="res_model">travel.package</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record id="sale_order_action" model="ir.actions.act_window">
+			<field name="name">Sales Order</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+		</record>
+
+		<record id="customer_invoice_action" model="ir.actions.act_window">
+			<field name="name">Invoices</field>
+			<field name="res_model">account.move</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+	</data>
+</odoo>

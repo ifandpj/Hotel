@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- Menu Dashboard -->
+	<menuitem id="menu_dashboard_travel_umroh" name="Travel Umroh" web_icon="ab_travel_umroh,static/description/icon.png"/>
+
+	<!-- Menu Bar Master Data -->
+	<menuitem id="menu_bar_master_data" name="Master Data" parent="menu_dashboard_travel_umroh"/>
+
+	<!-- Menu Item Master Data -->
+	<menuitem id="menu_item_produk" name="Produk" parent="menu_bar_master_data" action="travel_umroh_produk_action"/>
+	<menuitem id="menu_item_paket_produk" name="Paket Produk" parent="menu_bar_master_data" action="travel_umroh_paket_produk_action"/>
+	<menuitem id="menu_item_jamaah" name="Jamaah" parent="menu_bar_master_data" action="travel_umroh_jamaah_action"/>
+	<menuitem id="menu_item_airline" name="Airline" parent="menu_bar_master_data" action="travel_umroh_airline_action"/>
+	<menuitem id="menu_item_hotel" name="Hotel" parent="menu_bar_master_data" action="travel_umroh_hotel_action"/>
+
+	<!-- Menu Bar Transaction -->
+	<menuitem id="menu_bar_transaction" name="Transaction" parent="menu_dashboard_travel_umroh"/>
+	<!-- Menu Item Transaction -->
+	<menuitem id="menu_item_travel_package" name="Travel Package" parent="menu_bar_transaction" action="travel_package_action"/>
+	<menuitem id="menu_item_sale_order" name="Sale Order" parent="menu_bar_transaction" action="sale_order_action"/>
+	<menuitem id="menu_item_customer_invoice" name="Customer Invoice" parent="menu_bar_transaction" action="customer_invoice_action"/>
+
+</odoo>

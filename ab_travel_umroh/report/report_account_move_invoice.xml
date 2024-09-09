@@ -1,0 +1,170 @@
+<odoo>
+
+	<template id="header_invoice">
+		<div class="header text-center">
+			<h3 style="font-weight:bold;">
+				CUSTOMER INVOICE
+			</h3>
+		</div>
+	</template>
+
+	<template id="body_invoice">
+		<div class="page">
+			<div class="d-flex justify-content-center">
+				<table class="table" style="width:50%">
+					<tbody>
+						<tr style="border-top:1px solid rgb(222, 226, 230);">
+							<td style="width:33%;padding:5px;color:black;font-weight: bold;">Customer</td>
+							<td style="width:66%;padding:5px;">
+								<t t-esc="o.partner_id.name"/>
+							</td>
+						</tr>
+						<tr style="border-top:1px solid rgb(222, 226, 230);">
+							<td style="width:33%;padding:5px;color:black;font-weight: bold;">Address</td>
+							<td style="width:66%;padding:5px;">
+								<t t-esc="o.partner_id.city"/>
+							</td>
+						</tr>
+						<tr style="border-bottom:0 white;">
+							<td style="width:33%;padding:5px;color:black;font-weight: bold;">Mobile</td>
+							<td style="width:66%;padding:5px;">
+								<t t-esc="o.partner_id.mobile"/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<span style="padding:5px;">
+				</span>
+				<table class="table" style="width:50%">
+					<tbody>
+						<tr style="border-top:1px solid rgb(222, 226, 230);">
+							<td style="width:33%;padding:5px;color:black;font-weight: bold;">No</td>
+							<td style="width:66%;padding:5px;">
+								<t t-esc="o.display_name"/>
+							</td>
+						</tr>
+						<tr style="border-top:1px solid rgb(222, 226, 230); border-bottom:0 white;">
+							<td style="width:33%;padding:5px;color:black;font-weight: bold;">Tanggal</td>
+							<td style="width:66%;padding:5px;">
+								<t t-esc="o.invoice_date.strftime('%d %B %Y')"/>
+							</td>
+						</tr>
+						<tr style="border:0;">
+							<td style="border:0;width:33%;padding:5px;color:white;">.</td>
+							<td style="border:0;width:66%;padding:5px;color:white;">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<table class="table table-bordered mt-4">
+				<thead style="color:black;font-weight: bold;border-bottom:0 rgb(222, 226, 230);">
+					<tr>
+						<td class="text-center">Product</td>
+						<td class="text-center">QTY</td>
+						<td class="text-center">Price Unit</td>
+						<td class="text-center">Subtotal</td>
+					</tr>
+				</thead>
+				<tbody style="border-top:0 rgb(222, 226, 230);">
+					<t t-foreach="o.line_ids" t-as="line">
+						<t t-if="line.product_id or line.quantity or line.price_unit or line.price_subtotal">
+							<tr>
+								<td class="text-center">
+									<t t-esc="line.product_id.name"/>
+								</td>
+								<td style="text-align: right;">
+									<t t-esc="line.quantity"/>
+								</td>
+								<td style="text-align: right;">
+									<t t-esc="'${:,.2f}'.format(line.price_unit)"/>
+								</td>
+								<td style="text-align: right;">
+									<t t-esc="'${:,.2f}'.format(line.price_subtotal)"/>
+								</td>
+							</tr>
+						</t>
+					</t>
+					<tr>
+						<td style="font-weight:bold;text-align: right;" colspan="3">
+							Total
+						</td>
+						<td style="text-align: right;">
+							<t t-esc="'${:,.2f}'.format(o.amount_total)"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="table table-bordered mt-4">
+				<thead style="color:black;font-weight: bold;border-bottom:0 rgb(222, 226, 230);">
+					<tr>
+						<td class="text-center" colspan="3">PAYMENT</td>
+					</tr>
+					<tr>
+						<td class="text-center">Method</td>
+						<td class="text-center">Tanggal</td>
+						<td class="text-center">Amount</td>
+					</tr>
+				</thead>
+				<tbody style="border-top:0 rgb(222, 226, 230);">
+					<t t-foreach="o.get_payment()" t-as="payment">
+						<tr>
+							<td class="text-center">
+								<t t-esc="payment.journal_id.name"/>
+							</td>
+							<td class="text-center">
+								<t t-esc="payment.date.strftime('%d %B %Y')"/>
+							</td>
+							<td style="text-align: right;">
+								<t t-esc="'${:,.2f}'.format(payment.amount)"/>
+							</td>
+						</tr>
+					</t>
+					<tr>
+						<td style="font-weight:bold;text-align: right;" colspan="2">
+							Sisa
+						</td>
+						<td style="text-align: right;">
+							<t t-esc="'${:,.2f}'.format(o.amount_residual)"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="row mx-auto" style="margin-top:40px">
+				<div class="col-4"></div>
+				<div class="col-4 text-center border border-dark" style="max-width: 400px;">
+					<p style="font-weight:bold; color:black;margin-bottom:120px;">
+            Finance
+					</p>
+					<p style="font-weight:bold; color:black;margin-bottom:0;">
+						<t t-esc="o.user_id.name"/>
+					</p>
+				</div>
+				<div class="col-4"></div>
+			</div>
+		</div>
+	</template>
+
+	<template id="report_invoice">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="o">
+				<div t-if="report_type == 'html'">
+					<div>
+						<t t-call="ab_travel_umroh.header_invoice"/>
+					</div>
+					<div>
+						<t t-call="ab_travel_umroh.body_invoice"/>
+					</div>
+				</div>
+				<div t-else="">
+					<t t-call="ab_travel_umroh.header_invoice"/>
+					<t t-call="web.external_layout">
+						<t t-call="ab_travel_umroh.body_invoice"/>
+					</t>
+				</div>
+			</t>
+		</t>
+	</template>
+
+
+</odoo>
